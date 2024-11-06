@@ -19,19 +19,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
-      'https://*.127.0.0.1',
+    'https://nextbell-task.onrender.com',  'https://*.127.0.0.1',
 ]
 
 CSRF_COOKIE_NAME = 'csrftoken'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  
-   
-    
+    "https://nextbell-task.onrender.com",
+    # frontend live url
 ]
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:5173',
-    
+     # frontend live url
 )
 
 CORS_ALLOW_METHODS = [
@@ -55,7 +55,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'accounts',
     'products',
+    'category',
 
 ]
 
@@ -65,6 +67,16 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '100/day',  
+        'anon': '10/hour',  
+    }
 }
 
 
